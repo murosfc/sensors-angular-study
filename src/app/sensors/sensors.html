@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Value</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (sensor of sensors(); track sensor.id) {
+    <tr>
+      <td>{{ sensor.id }}</td>
+      <td>{{ sensor.value }}</td>
+      <td>{{ sensor.timestamp | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+    </tr>
+    }
+  </tbody>
+</table>
