@@ -1,18 +1,56 @@
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Value</th>
-      <th>Timestamp</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (sensor of sensors(); track sensor.id) {
-    <tr>
-      <td>{{ sensor.id }}</td>
-      <td>{{ sensor.value }}</td>
-      <td>{{ sensor.timestamp | date : "dd/MM/yyyy HH:mm:ss" }}</td>
-    </tr>
+<div class="sensors-container">
+  <h2>Sensors Management</h2>
+
+  <div class="form-container">
+    <label for="sensor-select">Select Sensor:</label>
+    <select id="sensor-select" (change)="onSelectSensor($event)">
+      <option value="" disabled selected>-- Select a sensor --</option>
+      @for (sensor of sensors(); track sensor; let i = $index) {
+        <option [value]="i">{{ sensor.id }} - {{ sensor.timestamp | date:'short' }}</option>
+      }
+    </select>
+
+    @if (selectedSensorIndex() !== null) {
+      <form [formGroup]="sensorForm">
+        <div class="form-group">
+          <label for="id">ID:</label>
+          <input id="id" type="text" formControlName="id" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label for="value">Value:</label>
+          <input id="value" type="number" formControlName="value" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="timestamp">Timestamp:</label>
+          <input id="timestamp" type="datetime-local" formControlName="timestamp" readonly>
+        </div>
+
+        <div class="actions">
+          <button type="button" (click)="onCancel()">Close</button>
+        </div>
+      </form>
     }
-  </tbody>
-</table>
+  </div>
+
+  <h3>Sensors List</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Value</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (sensor of sensors(); track sensor) {
+      <tr>
+        <td>{{ sensor.id }}</td>
+        <td>{{ sensor.value }}</td>
+        <td>{{ sensor.timestamp | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

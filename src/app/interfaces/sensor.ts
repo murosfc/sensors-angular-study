@@ -1,5 +1,5 @@
 export interface Sensor {
-    id: number;
+    id: string;
     value: number;
     timestamp: Date;
 }
